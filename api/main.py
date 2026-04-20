@@ -59,7 +59,7 @@ class Transaction(BaseModel):
 @app.get("/")
 def root():
    return{
-      "message":"Fraud DetectionAPI",
+      "message":"Fraud Detection API",
       "version":"1.0.0",
       "threshold": THRESHOLD
    }
@@ -87,16 +87,16 @@ def predict(transaction: Transaction):
    ]])
    # We did scaling during training → the same should be done here
    data[0][0] =scaler_time.transform([[data[0][0]]])[0][0]
-   data[0][1] =scaler_amount.transform([[data[0][1]]])[0][0]
+   data[0][29] =scaler_amount.transform([[data[0][29]]])[0][0]
 
    probabilty = model.predict_proba(data)[0][1]
    is_fraud = bool(probabilty >= THRESHOLD)
    
    return{
       "is_fraud":is_fraud,
-      "fraud probability": round(float(probabilty),4),
+      "fraud_probability": round(float(probabilty),4),
       "threshold": THRESHOLD,
-      "result": "FRAUD "if is_fraud else "NORMAL"      
+      "result": "FRAUD" if is_fraud else "NORMAL"      
    }
 
 
